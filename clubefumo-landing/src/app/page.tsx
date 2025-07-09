@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Container,
@@ -10,11 +10,11 @@ import {
   Box,
   Stack,
   Grid,
-  Card,
-  CardContent
 } from '@mui/material';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
   const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('es');
@@ -25,6 +25,16 @@ export default function Home() {
       .then(res => res.json())
       .then(setT);
   }, [lang]);
+
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    why: "",
+    smoke: "",
+    threeWords: "",
+  });
+
+  const [sending, setSending] = React.useState(false);
 
   if (!ageVerified) {
     return (
@@ -44,9 +54,46 @@ export default function Home() {
     );
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+
+    try {
+      await fetch("https://v1.nocodeapi.com/gwa/google_sheets/ilwfHHMKVdprsqbV?tabId=contato", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([
+          [
+            formData.name,
+            formData.email,
+            formData.why,
+            formData.smoke,
+            formData.threeWords,
+            new Date().toLocaleString(),
+           lang
+          ]
+        ]),
+      });
+    } catch (err) {
+      alert("Erro ao enviar.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <>
-    <Header lang={lang} setLang={setLang}/>
+      <Header lang={lang} setLang={setLang} />
       {/* Hero Section */}
       <Container maxWidth="lg" sx={{ textAlign: 'center', py: 10 }}>
         <motion.div
@@ -114,13 +161,15 @@ export default function Home() {
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>{t.subheadline}</Typography>
           <Typography variant="body2" color="text.secondary" mb={4}>{t.form_intro}</Typography>
 
-          <Box component="form">
+          <Box component="form" onSubmit={handleSubmit}>
             <Stack spacing={3}>
               <TextField
                 label={t.name}
                 name="name"
                 fullWidth
                 variant="outlined"
+                value={formData.name}
+                onChange={handleChange}
               />
               <TextField
                 label={t.email}
@@ -128,6 +177,8 @@ export default function Home() {
                 fullWidth
                 variant="outlined"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
               />
               <TextField
                 label={t.why_join}
@@ -136,27 +187,33 @@ export default function Home() {
                 rows={3}
                 fullWidth
                 variant="outlined"
+                value={formData.why}
+                onChange={handleChange}
               />
               <TextField
                 label={t.favorite_smoke}
                 name="smoke"
                 fullWidth
                 variant="outlined"
+                value={formData.smoke}
+                onChange={handleChange}
               />
               <TextField
                 label={t.three_words}
                 name="threeWords"
                 fullWidth
                 variant="outlined"
+                value={formData.threeWords}
+                onChange={handleChange}
               />
-              <Button variant="contained" size="large" type="submit">
-                {t.submit}
+              <Button variant="contained" size="large" type="submit" disabled={sending}>
+                {sending ? "Enviando..." : t.submit}
               </Button>
             </Stack>
           </Box>
         </motion.div>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 }
