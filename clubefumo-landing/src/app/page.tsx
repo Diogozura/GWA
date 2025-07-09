@@ -10,6 +10,7 @@ import {
   Box,
   Stack,
   Grid,
+  MenuItem,
 } from '@mui/material';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -18,7 +19,29 @@ import Footer from '@/components/Footer';
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
   const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('es');
-  const [t, setT] = useState<any>({});
+  interface Translations {
+    age_title?: string;
+    yes?: string;
+    no?: string;
+    welcome?: string;
+    description?: string;
+    who_we_are?: string;
+    about_description?: string;
+    partners_title?: string;
+    headline?: string;
+    subheadline?: string;
+    form_intro?: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+    how_found_us?: string;
+    member_name?: string;
+    why_join?: string;
+    submit?: string;
+    [key: string]: string | undefined;
+  }
+
+  const [t, setT] = useState<Translations>({});
 
   useEffect(() => {
     fetch(`/locales/${lang}.json`)
@@ -26,19 +49,20 @@ export default function Home() {
       .then(setT);
   }, [lang]);
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+    howFoundUs: "",
+    memberName: "",
     why: "",
-    smoke: "",
-    threeWords: "",
   });
 
   const [sending, setSending] = React.useState(false);
 
   if (!ageVerified) {
     return (
-      <Container maxWidth="sm" sx={{ textAlign: 'center', py: 12 }}>
+      <Container maxWidth="sm" sx={{ height: '100vh', display: 'grid', alignItems: 'center', textAlign: 'center', py: 12 }}>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +78,7 @@ export default function Home() {
     );
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -62,7 +86,8 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
 
@@ -76,15 +101,17 @@ export default function Home() {
           [
             formData.name,
             formData.email,
+            formData.phone,
+            formData.howFoundUs,
+            formData.memberName,
             formData.why,
-            formData.smoke,
-            formData.threeWords,
             new Date().toLocaleString(),
-           lang
+            lang,
           ]
         ]),
       });
     } catch (err) {
+      console.error(err);
       alert("Erro ao enviar.");
     } finally {
       setSending(false);
@@ -137,11 +164,11 @@ export default function Home() {
           <Typography variant="h4" gutterBottom>{t.partners_title}</Typography>
           <Grid container spacing={4} justifyContent="center" mt={2}>
             {[1, 2, 3].map((item) => (
-              <Grid item xs={6} sm={4} md={2} key={item}>
+              <Grid size={{ xs: 6, sm: 4, md: 2 }} key={item}>
                 <motion.img
-                  src={`/img/partner${item}.png`}
+                  src={`/GWA_logo${item}.png`}
                   alt={`Partner ${item}`}
-                  style={{ width: '100%', maxHeight: 60, objectFit: 'contain', opacity: 0.8 }}
+                  style={{ width: '100%', maxHeight: 120, objectFit: 'contain', opacity: 0.8 }}
                   whileHover={{ opacity: 1, scale: 1.05 }}
                 />
               </Grid>
@@ -170,6 +197,7 @@ export default function Home() {
                 variant="outlined"
                 value={formData.name}
                 onChange={handleChange}
+                required
               />
               <TextField
                 label={t.email}
@@ -179,7 +207,43 @@ export default function Home() {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
+              <TextField
+                label={t.phone}
+                name="phone"
+                fullWidth
+                variant="outlined"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <TextField
+                label={t.how_found_us}
+                name="howFoundUs"
+                select
+                fullWidth
+                value={formData.howFoundUs}
+                onChange={handleChange}
+                required
+              >
+                <MenuItem value="social">Instagram / Social Media</MenuItem>
+                <MenuItem value="web">Google / Website</MenuItem>
+                <MenuItem value="friend">Referred by a Member</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
+
+              {formData.howFoundUs === "friend" && (
+                <TextField
+                  label={t.member_name}
+                  name="memberName"
+                  fullWidth
+                  variant="outlined"
+                  value={formData.memberName}
+                  onChange={handleChange}
+                  required
+                />
+              )}
+
               <TextField
                 label={t.why_join}
                 name="why"
@@ -190,23 +254,13 @@ export default function Home() {
                 value={formData.why}
                 onChange={handleChange}
               />
-              <TextField
-                label={t.favorite_smoke}
-                name="smoke"
-                fullWidth
-                variant="outlined"
-                value={formData.smoke}
-                onChange={handleChange}
-              />
-              <TextField
-                label={t.three_words}
-                name="threeWords"
-                fullWidth
-                variant="outlined"
-                value={formData.threeWords}
-                onChange={handleChange}
-              />
-              <Button variant="contained" size="large" type="submit" disabled={sending}>
+
+              <Button
+                variant="contained"
+                size="large"
+                type="submit"
+                disabled={sending}
+              >
                 {sending ? "Enviando..." : t.submit}
               </Button>
             </Stack>
