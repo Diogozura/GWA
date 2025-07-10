@@ -65,7 +65,7 @@ export default function Home() {
   if (!ageVerified) {
     return (
       <>
-      <Header open={true} lang={lang} setLang={setLang} />
+        <Header open={true} lang={lang} setLang={setLang} />
         <Container maxWidth="sm" sx={{ height: '80vh', display: 'grid', alignItems: 'center', textAlign: 'center', py: 12 }}>
 
           <motion.div
@@ -236,56 +236,73 @@ export default function Home() {
       </Container>
 
       {/* Brands Section */}
-      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>{t.partners_title}</Typography>
-        <CarroselInfinito imagePaths={[
-          '/brands/cola.png',
-          '/brands/fanta.png',
-          '/brands/raw.png',
-          '/brands/stoners.png',
-          '/brands/estathe.png',
-          '/brands/puffco.png',
-          '/brands/riptips.png',
-          '/brands/Snail.png',
-        ]} />
+      <Container maxWidth={"100%"} sx={{ backgroundColor: '#111' }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ textAlign: 'center', color: 'white', mb: 2 }}
+        >
+          {t.partners_title}
+        </Typography>
+
+        <CarroselInfinito
+          imagePaths={[
+            '/brands/cola.png',
+            '/brands/fanta.png',
+            '/brands/raw.png',
+            '/brands/stoners.png',
+            '/brands/estathe.png',
+            '/brands/puffco.png',
+            '/brands/riptips.png',
+            '/brands/Snail.png',
+          ]}
+          speed={15}
+        />
       </Container>
+
 
 
 
       {/* Showcase Section */}
       <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>{t.partners_title} 3</Typography>
+
         <ScrollImageShowcase sections={steps} />
       </Container>
 
       {/* Brands 2 Section */}
-      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>{t.partners_title} 2</Typography>
-        <CarroselInfinito imagePaths={[
-          '/brands/cola.png',
-          '/brands/fanta.png',
-          '/brands/raw.png',
-          '/brands/stoners.png',
-          '/brands/estathe.png',
-          '/brands/puffco.png',
-          '/brands/riptips.png',
-          '/brands/Snail.png',
-        ]} reverse speed={20}
+      <Box sx={{ backgroundColor: '#111' }}>
+        <CarroselInfinito
+          imagePaths={[
+            '/brands/cola.png',
+            '/brands/fanta.png',
+            '/brands/raw.png',
+            '/brands/stoners.png',
+            '/brands/estathe.png',
+            '/brands/puffco.png',
+            '/brands/riptips.png',
+            '/brands/Snail.png',
+          ]}
+          speed={15}
+          reverse={true}
         />
-      </Container>
+      </Box>
+
+
       {/* Brands 2 Section */}
-      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>{t.partners_title} 2</Typography>
-        <CarroselInfinito imagePaths={[
-          '/brands/cola.png',
-          '/brands/fanta.png',
-          '/brands/raw.png',
-          '/brands/stoners.png',
-          '/brands/estathe.png',
-          '/brands/puffco.png',
-          '/brands/riptips.png',
-          '/brands/Snail.png',
-        ]} speed={20}
+      <Container maxWidth="100%" sx={{ py: 4, textAlign: 'center' }}>
+        
+       <CarroselInfinito
+          imagePaths={[
+            '/brands/cola.png',
+            '/brands/fanta.png',
+            '/brands/raw.png',
+            '/brands/stoners.png',
+            '/brands/estathe.png',
+            '/brands/puffco.png',
+            '/brands/riptips.png',
+            '/brands/Snail.png',
+          ]}
+          speed={15}
         />
       </Container>
 
