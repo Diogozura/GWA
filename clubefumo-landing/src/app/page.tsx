@@ -51,7 +51,15 @@ export default function Home() {
       .then(setT);
   }, [lang]);
 
+  const [hydrated, setHydrated] = useState(false);
 
+  useEffect(() => {
+    const verified = localStorage.getItem('age_verified');
+    if (verified === 'true') setAgeVerified(true);
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) return null;
 
   if (!ageVerified) {
     return (
@@ -282,8 +290,6 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Typography variant="h4" gutterBottom>{t.headline}</Typography>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom>{t.subheadline}</Typography>
 
 
           <Box
