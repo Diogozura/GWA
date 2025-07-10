@@ -43,7 +43,7 @@ export default function Header({ open, lang, setLang }: Props) {
         >
           <Box display="flex"  alignItems="center" justifyContent="center">
             <motion.img
-              src="/GWA_Logo1.png"
+              src="/GWA_logo_header.svg"
               alt="Logo GWA social club"
               width={60}
               height={60}

@@ -115,6 +115,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                         <Box component="form" onSubmit={handleSubmit}>
                             <Stack spacing={3}>
                                 <TextField
+                                    placeholder={t.name_place}
                                     label={t.name}
                                     name="name"
                                     fullWidth

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Container,
   Typography,
@@ -9,6 +9,8 @@ import {
   Box,
   Stack,
   Grid,
+  useTheme,
+  Fab,
 } from '@mui/material';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -19,6 +21,8 @@ import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-icons';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import CarroselInfinito2 from '@/components/CarroselInfinito2';
 
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
@@ -43,7 +47,20 @@ export default function Home() {
     submit?: string;
     [key: string]: string | undefined;
   }
+  const [visible, setVisible] = useState(false);
+  const theme = useTheme();
 
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [t, setT] = useState<Translations>({});
 
   useEffect(() => {
@@ -59,6 +76,8 @@ export default function Home() {
     if (verified === 'true') setAgeVerified(true);
     setHydrated(true);
   }, []);
+
+  const ref = useRef(null);
 
   if (!hydrated) return null;
 
@@ -258,6 +277,7 @@ export default function Home() {
           ]}
           speed={15}
         />
+
       </Container>
 
 
@@ -269,54 +289,62 @@ export default function Home() {
         <ScrollImageShowcase sections={steps} />
       </Container>
 
-      {/* Brands 2 Section */}
-      <Box sx={{ backgroundColor: '#111' }}>
-        <CarroselInfinito
-          imagePaths={[
-            '/brands/cola.png',
-            '/brands/fanta.png',
-            '/brands/raw.png',
-            '/brands/stoners.png',
-            '/brands/estathe.png',
-            '/brands/puffco.png',
-            '/brands/riptips.png',
-            '/brands/Snail.png',
-          ]}
-          speed={15}
-          reverse={true}
-        />
+
+
+      <Box height={'100vh'}>
+        {/* Brands 2 Section */}
+        <Box sx={{ backgroundColor: '#111' }}>
+          <CarroselInfinito2
+            imagePaths={[
+              '/glass/glass_1.png',
+              '/glass/glass_2.png',
+              '/glass/glass_3.png',
+              '/glass/glass_4.png',
+              '/glass/glass_5.png',
+            ]}
+            reverse={true}
+            speed={30}     // pixels/segundo
+            height={300}    // altura das imagens
+            gap={40}       // espaçamento horizontal entre as imagens
+          />
+        </Box>
+
+        {/* Brands 2 Section */}
+        <Box sx={{ backgroundColor: '#111' }}>
+          <CarroselInfinito2
+            imagePaths={[
+              '/merch/merch_1.png',
+              '/merch/merch_2.png',
+              '/merch/merch_3.png',
+              '/merch/merch_4.png',
+            ]}
+            reverse={false}
+            speed={30}     // pixels/segundo
+            height={300}    // altura das imagens
+            gap={50}       // espaçamento horizontal entre as imagens
+          />
+        </Box>
+
       </Box>
 
+      <Box ref={ref} sx={{ position: 'relative', height: '200vh', bgcolor: '#111' }}>
 
-      {/* Brands 2 Section */}
-      <Container maxWidth="100%" sx={{ py: 4, textAlign: 'center' }}>
-        
-       <CarroselInfinito
-          imagePaths={[
-            '/brands/cola.png',
-            '/brands/fanta.png',
-            '/brands/raw.png',
-            '/brands/stoners.png',
-            '/brands/estathe.png',
-            '/brands/puffco.png',
-            '/brands/riptips.png',
-            '/brands/Snail.png',
-          ]}
-          speed={15}
+        <motion.img
+          src="/GWA_fundo_form.png"
+          alt="Parallax Temple"
+          style={{
+            position: 'sticky',
+            top: 0,
+            width: '100%',
+            height: '100vh',
+            objectFit: 'cover',
+            zIndex: 1,
+            // y: imgY as any,
+          }}
         />
-      </Container>
 
 
-
-      {/* Form Section */}
-      <Container maxWidth="lg" id='formcontact' sx={{ py: 10 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-
-
+        <Container maxWidth="lg" id="formcontact" sx={{ position: 'relative', zIndex: 2, pt: 12 }}>
           <Box
             sx={{
               background: 'linear-gradient(to right, #ff5e00, #ffc800)',
@@ -327,8 +355,8 @@ export default function Home() {
             }}
           >
             <Grid container spacing={4}>
-              {/* LEFT: FORM */}
-              <Grid size={{ xs: 12, md: 12 }} >
+
+              <Grid size={{ xs: 12 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Typography variant="h3" fontWeight="bold" gutterBottom>
                   {t.headline}
                 </Typography>
@@ -336,16 +364,18 @@ export default function Home() {
                   {t.subheadline}
                 </Typography>
               </Grid>
-              <Grid size={{ xs: 12, md: 6 }} >
+              {/* Textos e Form */}
+              <Grid size={{ xs: 12, md: 6 }}>
+
 
                 <Typography variant="body2" color="rgba(255,255,255,0.7)" mb={4}>
                   Complete the form below to request an invitation to GWA Social Club.
-                  All applications are reviewed by our membership committee.
                 </Typography>
-                <FormContact t={Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v ?? ""]))} lang={lang} />
+
+                <FormContact t={t} lang={lang} />
               </Grid>
 
-              {/* RIGHT: ADDRESS + MAP */}
+
               <Grid size={{ xs: 12, md: 6 }}>
                 <Box>
                   <Typography variant="h6" fontWeight="bold" mb={1}>
@@ -396,22 +426,23 @@ export default function Home() {
               </Grid>
             </Grid>
           </Box>
-
-        </motion.div>
-      </Container>
-
-      <Box
-        component="img"
-        src="/GWA_fundo_form.png"
-        alt="Catedral Illustration"
-        sx={{
-          width: '100%',
-          maxHeight: 400,
-          objectFit: 'fill',
-          marginTop: -2, // opcional para “grudar” no formulário
-          zIndex: 0,
-        }}
-      />
+        </Container>
+      </Box>
+      {visible ? (
+        <Fab
+          color="secondary"
+          size="small"
+          onClick={scrollToTop}
+          sx={{
+            position: 'fixed',
+            bottom: theme.spacing(4),
+            right: theme.spacing(4),
+            zIndex: 999,
+          }}
+        >
+          <KeyboardArrowUpIcon />
+        </Fab>
+      ) : null}
       <Footer />
     </>
   );
