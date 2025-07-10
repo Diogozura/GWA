@@ -17,7 +17,8 @@ import CarroselInfinito from '@/components/CarroselInfinito';
 import EditIcon from '@mui/icons-material/Edit';
 import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
@@ -63,7 +64,8 @@ export default function Home() {
 
   if (!ageVerified) {
     return (
-      <><Header lang={lang} setLang={setLang} />
+      <>
+      <Header open={true} lang={lang} setLang={setLang} />
         <Container maxWidth="sm" sx={{ height: '80vh', display: 'grid', alignItems: 'center', textAlign: 'center', py: 12 }}>
 
           <motion.div
@@ -76,28 +78,25 @@ export default function Home() {
               <Button variant="contained" color="primary" onClick={() => setAgeVerified(true)}>{t.yes}</Button>
               <Button variant="outlined" color="secondary" onClick={() => alert("Access denied")}>{t.no}</Button>
             </Stack>
-            <motion.img
-              src="/GWA_onlywater_shirt.png"
-              alt="GWA Logo"
-              width={300}
-              height={300}
-              style={{
-                width: '100%',
-                maxWidth: 300,
-                marginTop: 20,
-                opacity: 0.8,
-                borderRadius: '12px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                height: 'auto'
-              }}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ scale: 1.05, rotate: -5 }}
-              whileTap={{ scale: 0.95, rotate: 5 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <Box sx={{ textAlign: 'left', mt: 4 }}>
+              <motion.img
+                src="/GWA_only_water.svg"
+                alt="GWA Logo"
+                style={{
+                  width: '100%',
+                  maxWidth: 300,
+                  opacity: 0.8,
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  height: 'auto',
+                }}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ scale: 1.05, rotate: -5 }}
+                whileTap={{ scale: 0.95, rotate: 5 }}
+              />
+            </Box>
           </motion.div>
         </Container>
         <CookieConsent
@@ -116,25 +115,34 @@ export default function Home() {
 
   const steps = [
     {
-      title: 'Unleash Your Creativity',
+      icon: <FontAwesomeIcon icon={faBong} size="2x" />,
+      title: 'Glass Gallery',
       description: 'Transform your media in real time with powerful image tools.',
-      image: '/GWA_Logo1.png',
+      image: '/hero/hero_1.png',
     },
     {
-      title: 'Scale Effortlessly',
+      icon: <FontAwesomeIcon icon={faBagShopping} size="2x" />,
+      title: 'Apparel',
       description: 'Automate your workflow and handle thousands of requests per second.',
-      image: '/GWA_Logo2.png',
+      image: '/hero/hero_2.png',
     },
     {
-      title: 'Deploy Globally',
+      icon: <FontAwesomeIcon icon={faSeedling} />,
+      title: 'Seeds',
       description: 'Deliver assets from any corner of the globe with low latency.',
-      image: '/GWA_Logo3.png',
+      image: '/hero/hero_3.png',
+    },
+    {
+      icon: <FontAwesomeIcon icon={faSeedling} />,
+      title: 'Seeds',
+      description: 'Deliver assets from any corner of the globe with low latency.',
+      image: '/hero/hero_4.png',
     },
   ];
 
   return (
     <>
-      <Header lang={lang} setLang={setLang} />
+      <Header open={false} lang={lang} setLang={setLang} />
       {/* Hero Section */}
       <Container maxWidth="lg" sx={{ textAlign: 'center', py: 10 }}>
         <motion.div
@@ -169,6 +177,7 @@ export default function Home() {
                 zIndex: 1,
               }}
             >
+
             </Box>
 
 
@@ -200,7 +209,7 @@ export default function Home() {
 
           </Box>
         </motion.div>
-        <Typography variant="h2" gutterBottom>{t.welcome}</Typography>
+
         <Typography variant="h6" color="text.secondary">{t.description}</Typography>
         <Button
           component="a"
@@ -216,7 +225,6 @@ export default function Home() {
             py: 1.5,
             boxShadow: '0 0 0 2px #222', // contorno escuro
             textTransform: 'uppercase',
-            scrollBehavior: 'smooth', // depende do global scroll-behavior no HTML
             '&:hover': {
               background: 'linear-gradient(90deg, #9b00ff, #b300ff)',
               boxShadow: '0 0 0 2px #444',

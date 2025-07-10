@@ -1,21 +1,23 @@
 'use client';
 
 import { AppBar, Toolbar, Box, Select, MenuItem, useMediaQuery } from '@mui/material';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import React from 'react';
 
 type Props = {
   lang: string;
+  open: boolean;
   setLang: (value: 'en' | 'es' | 'ca' | 'it') => void;
 };
 
-export default function Header({ lang, setLang }: Props) {
+export default function Header({ open, lang, setLang }: Props) {
   const isMobile = useMediaQuery('(max-width:600px)');
   const { scrollYProgress } = useScroll();
 
-  // Transições de logo grande para pequena
-  const bigLogoScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.6]);
-  const bigLogoOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const smallLogoOpacity = useTransform(scrollYProgress, [0.05, 0.15], [0, 1]);
+  // Transição: imagem aparece com o scroll
+  const logoOpacity = useTransform(scrollYProgress, [0.01, 0.06], [0, 1]);
+  const logoScale = useTransform(scrollYProgress, [0.01, 0.06], [0.6, 1]);
+
 
   return (
     <motion.div
@@ -24,7 +26,7 @@ export default function Header({ lang, setLang }: Props) {
         top: 0,
         width: '100%',
         zIndex: 999,
-        background: 'rgba(17, 17, 17, 0.95)', // fundo escuro semi-transparente
+        background: 'rgba(17, 17, 17, 0.95)',
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
       }}
@@ -39,33 +41,21 @@ export default function Header({ lang, setLang }: Props) {
             minHeight: { xs: 64, md: 80 },
           }}
         >
-          <Box position="relative" display="flex" alignItems="center" justifyContent="center">
-            {/* Logo grande (some com scroll) */}
+          <Box display="flex"  alignItems="center" justifyContent="center">
             <motion.img
               src="/GWA_Logo1.png"
-              alt="Logo Grande"
-              style={{
-                position: 'absolute',
-                scale: bigLogoScale,
-                opacity: bigLogoOpacity,
-              }}
-              width={80}
-              height={80}
-            />
-
-            {/* Logo pequena (aparece com scroll) */}
-            <motion.img
-              src="/GWA_Logo2.png"
-              alt="Logo Pequena"
-              style={{
-                opacity: smallLogoOpacity,
-              }}
+              alt="Logo GWA social club"
               width={60}
               height={60}
+             
+              style={{
+                display: open ? 'none' : 'block',
+                opacity: logoOpacity as MotionValue<number>,
+                scale: logoScale as MotionValue<number>,
+              }}
             />
           </Box>
 
-          {/* Idioma no canto direito */}
           {!isMobile && (
             <Box sx={{ position: 'absolute', right: 16 }}>
               <Select
