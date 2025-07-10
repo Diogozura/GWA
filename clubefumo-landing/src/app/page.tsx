@@ -6,19 +6,22 @@ import {
   Container,
   Typography,
   Button,
-  TextField,
   Box,
   Stack,
   Grid,
-  MenuItem,
 } from '@mui/material';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import FormContact from '@/components/FormContact';
+import CarroselInfinito from '@/components/CarroselInfinito';
+import EditIcon from '@mui/icons-material/Edit';
+import ScrollImageShowcase from '@/components/ScrollImageShowcase';
+import CookieConsent from '@/components/CookieConsent';
 
 
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
-  const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('es');
+  const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('en');
   interface Translations {
     age_title?: string;
     yes?: string;
@@ -30,7 +33,6 @@ export default function Home() {
     partners_title?: string;
     headline?: string;
     subheadline?: string;
-    form_intro?: string;
     name?: string;
     email?: string;
     phone?: string;
@@ -49,74 +51,78 @@ export default function Home() {
       .then(setT);
   }, [lang]);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    howFoundUs: "",
-    memberName: "",
-    why: "",
-  });
 
-  const [sending, setSending] = React.useState(false);
 
   if (!ageVerified) {
     return (
-      <Container maxWidth="sm" sx={{ height: '100vh', display: 'grid', alignItems: 'center', textAlign: 'center', py: 12 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Typography variant="h3" gutterBottom>{t.age_title}</Typography>
-          <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
-            <Button variant="contained" color="primary" onClick={() => setAgeVerified(true)}>{t.yes}</Button>
-            <Button variant="outlined" color="secondary" onClick={() => alert("Access denied")}>{t.no}</Button>
-          </Stack>
-        </motion.div>
-      </Container>
+      <><Header lang={lang} setLang={setLang} />
+        <Container maxWidth="sm" sx={{ height: '80vh', display: 'grid', alignItems: 'center', textAlign: 'center', py: 12 }}>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Typography variant="h3" gutterBottom>{t.age_title}</Typography>
+            <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
+              <Button variant="contained" color="primary" onClick={() => setAgeVerified(true)}>{t.yes}</Button>
+              <Button variant="outlined" color="secondary" onClick={() => alert("Access denied")}>{t.no}</Button>
+            </Stack>
+            <motion.img
+              src="/GWA_onlywater_shirt.png"
+              alt="GWA Logo"
+              width={300}
+              height={300}
+              style={{
+                width: '100%',
+                maxWidth: 300,
+                marginTop: 20,
+                opacity: 0.8,
+                borderRadius: '12px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                height: 'auto'
+              }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.05, rotate: -5 }}
+              whileTap={{ scale: 0.95, rotate: 5 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </motion.div>
+        </Container>
+        <CookieConsent
+          t={{
+            cookies_privacy: t.cookies_privacy ?? "",
+            cookies_consent: t.cookies_consent ?? "",
+            cookies_reject: t.cookies_reject ?? "",
+            cookies_accept: t.cookies_accept ?? "",
+          }}
+        />
+        <Footer />
+      </>
+
     );
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSending(true);
-
-    try {
-      await fetch("https://v1.nocodeapi.com/gwa/google_sheets/ilwfHHMKVdprsqbV?tabId=contato", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify([
-          [
-            formData.name,
-            formData.email,
-            formData.phone,
-            formData.howFoundUs,
-            formData.memberName,
-            formData.why,
-            new Date().toLocaleString(),
-            lang,
-          ]
-        ]),
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao enviar.");
-    } finally {
-      setSending(false);
-    }
-  };
+  const steps = [
+    {
+      title: 'Unleash Your Creativity',
+      description: 'Transform your media in real time with powerful image tools.',
+      image: '/GWA_Logo1.png',
+    },
+    {
+      title: 'Scale Effortlessly',
+      description: 'Automate your workflow and handle thousands of requests per second.',
+      image: '/GWA_Logo2.png',
+    },
+    {
+      title: 'Deploy Globally',
+      description: 'Deliver assets from any corner of the globe with low latency.',
+      image: '/GWA_Logo3.png',
+    },
+  ];
 
   return (
     <>
@@ -128,57 +134,149 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Typography variant="h2" gutterBottom>{t.welcome}</Typography>
-          <Typography variant="h6" color="text.secondary">{t.description}</Typography>
-          <Box mt={4}>
-            <img
-              src="https://assets.imgix.net/examples/kingfisher.jpg?auto=format&fit=crop&w=1200&h=600&blend=000000&blend-mode=multiply"
-              alt="Hero"
-              style={{ maxWidth: '100%', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="start"
+
+            sx={{
+              backgroundColor: '#111',
+              paddingTop: { xs: 10, md: 16 },
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Fundo branco centralizado */}
+            <Box
+              sx={{
+                position: 'relative',
+                width: { xs: '90%', md: '70%' },
+                maxWidth: 900,
+                minHeight: 400,
+                backgroundColor: '#fff',
+                borderRadius: '24px',
+                paddingTop: '140px',
+                paddingBottom: '40px',
+                px: { xs: 2, md: 4 },
+                zIndex: 1,
+              }}
+            >
+            </Box>
+
+
+            <Box
+              component="img"
+              src="/GWA_Logo1.png"
+              alt="GWA Logo"
+              sx={{
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                top: {
+                  xs: '35px',   // até 600px
+                  sm: '30px',   // ≥ 600px
+                  md: '60px',   // ≥ 900px
+                  lg: '80px',   // ≥ 1200px
+                  xl: '100px',  // ≥ 1536px
+                },
+                width: {
+                  xs: '90%',
+                  sm: '60%',
+                  md: '35%',
+                  lg: '45%',
+                  xl: '30%',
+                },
+                zIndex: 2,
+              }}
             />
+
           </Box>
         </motion.div>
+        <Typography variant="h2" gutterBottom>{t.welcome}</Typography>
+        <Typography variant="h6" color="text.secondary">{t.description}</Typography>
+        <Button
+          component="a"
+          href="#formcontact"
+          variant="contained"
+          endIcon={<EditIcon />}
+          sx={{
+            background: 'linear-gradient(90deg, #8f00ff, #a300d6)',
+            color: '#FFA500', // ou '#FFB300' para mais amarelo
+            fontWeight: 600,
+            borderRadius: '12px',
+            px: 3,
+            py: 1.5,
+            boxShadow: '0 0 0 2px #222', // contorno escuro
+            textTransform: 'uppercase',
+            scrollBehavior: 'smooth', // depende do global scroll-behavior no HTML
+            '&:hover': {
+              background: 'linear-gradient(90deg, #9b00ff, #b300ff)',
+              boxShadow: '0 0 0 2px #444',
+            },
+          }}
+        >
+          Request Invitation
+        </Button>
       </Container>
 
-      {/* About Section */}
-      <Container maxWidth="md" sx={{ py: 8 }}>
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Typography variant="h4" gutterBottom>{t.who_we_are}</Typography>
-          <Typography variant="body1" color="text.secondary">
-            {t.about_description}
-          </Typography>
-        </motion.div>
+      {/* Brands Section */}
+      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>{t.partners_title}</Typography>
+        <CarroselInfinito imagePaths={[
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
+        ]} />
       </Container>
 
-      {/* Partners Section */}
-      <Container maxWidth="lg" sx={{ py: 8, textAlign: 'center' }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Typography variant="h4" gutterBottom>{t.partners_title}</Typography>
-          <Grid container spacing={4} justifyContent="center" mt={2}>
-            {[1, 2, 3].map((item) => (
-              <Grid size={{ xs: 6, sm: 4, md: 2 }} key={item}>
-                <motion.img
-                  src={`/GWA_logo${item}.png`}
-                  alt={`Partner ${item}`}
-                  style={{ width: '100%', maxHeight: 120, objectFit: 'contain', opacity: 0.8 }}
-                  whileHover={{ opacity: 1, scale: 1.05 }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </motion.div>
+
+
+      {/* Showcase Section */}
+      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>{t.partners_title} 3</Typography>
+        <ScrollImageShowcase sections={steps} />
       </Container>
+
+      {/* Brands 2 Section */}
+      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>{t.partners_title} 2</Typography>
+        <CarroselInfinito imagePaths={[
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
+        ]} reverse speed={20}
+        />
+      </Container>
+      {/* Brands 2 Section */}
+      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>{t.partners_title} 2</Typography>
+        <CarroselInfinito imagePaths={[
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
+        ]} speed={20}
+        />
+      </Container>
+
+
 
       {/* Form Section */}
-      <Container maxWidth="md" sx={{ py: 10 }}>
+      <Container maxWidth="lg" id='formcontact' sx={{ py: 10 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -186,87 +284,103 @@ export default function Home() {
         >
           <Typography variant="h4" gutterBottom>{t.headline}</Typography>
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>{t.subheadline}</Typography>
-          <Typography variant="body2" color="text.secondary" mb={4}>{t.form_intro}</Typography>
 
-          <Box component="form" onSubmit={handleSubmit}>
-            <Stack spacing={3}>
-              <TextField
-                label={t.name}
-                name="name"
-                fullWidth
-                variant="outlined"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                label={t.email}
-                name="email"
-                fullWidth
-                variant="outlined"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                label={t.phone}
-                name="phone"
-                fullWidth
-                variant="outlined"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-              <TextField
-                label={t.how_found_us}
-                name="howFoundUs"
-                select
-                fullWidth
-                value={formData.howFoundUs}
-                onChange={handleChange}
-                required
-              >
-                <MenuItem value="social">Instagram / Social Media</MenuItem>
-                <MenuItem value="web">Google / Website</MenuItem>
-                <MenuItem value="friend">Referred by a Member</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </TextField>
 
-              {formData.howFoundUs === "friend" && (
-                <TextField
-                  label={t.member_name}
-                  name="memberName"
-                  fullWidth
-                  variant="outlined"
-                  value={formData.memberName}
-                  onChange={handleChange}
-                  required
-                />
-              )}
+          <Box
+            sx={{
+              background: 'linear-gradient(to right, #ff5e00, #ffc800)',
+              borderRadius: 4,
+              p: { xs: 4, md: 6 },
+              color: 'white',
+              mt: 6,
+            }}
+          >
+            <Grid container spacing={4}>
+              {/* LEFT: FORM */}
+              <Grid size={{ xs: 12, md: 12 }} >
+                <Typography variant="h3" fontWeight="bold" gutterBottom>
+                  {t.headline}
+                </Typography>
+                <Typography variant="h5" fontWeight={300} gutterBottom>
+                  {t.subheadline}
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }} >
 
-              <TextField
-                label={t.why_join}
-                name="why"
-                multiline
-                rows={3}
-                fullWidth
-                variant="outlined"
-                value={formData.why}
-                onChange={handleChange}
-              />
+                <Typography variant="body2" color="rgba(255,255,255,0.7)" mb={4}>
+                  Complete the form below to request an invitation to GWA Social Club.
+                  All applications are reviewed by our membership committee.
+                </Typography>
+                <FormContact t={Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v ?? ""]))} lang={lang} />
+              </Grid>
 
-              <Button
-                variant="contained"
-                size="large"
-                type="submit"
-                disabled={sending}
-              >
-                {sending ? "Enviando..." : t.submit}
-              </Button>
-            </Stack>
+              {/* RIGHT: ADDRESS + MAP */}
+              <Grid size={{ xs: 12, md: 6 }}>
+                <Box>
+                  <Typography variant="h6" fontWeight="bold" mb={1}>
+                    GWA Social Club
+                  </Typography>
+                  <Typography variant="body2" color="rgba(255,255,255,0.8)" mb={1}>
+                    Carrer de Sant Antoni Maria Claret, 25<br />
+                    Gràcia, 08037 - Barcelona
+                  </Typography>
+                  <Typography variant="body2" color="rgba(255,255,255,0.8)" mb={2}>
+                    info@gwasocialclub.es
+                  </Typography>
+
+                  <Box
+                    component="iframe"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.610671155578!2d2.1648533!3d41.4042607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3e2c57cd0bd%3A0x3fe09c75bd92c2c7!2sGWA%20Social%20Club!5e0!3m2!1spt-BR!2sbr!4v1752144497798!5m2!1spt-BR!2sbr"
+                    width="100%"
+                    height="400"
+                    sx={{
+                      border: 0,
+                      borderRadius: 2,
+                      mb: 2,
+                      height: { xs: 300, md: 360 },
+                    }}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    href="https://maps.app.goo.gl/hH2L3ZyPNVACKfdb6"
+                    target="_blank"
+                    fullWidth
+                    sx={{
+                      mt: 1,
+                      background: '#ffa500',
+                      color: '#111',
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        background: '#ff9900',
+                      },
+                    }}
+                  >
+                    open in google maps
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
+
         </motion.div>
       </Container>
+
+      <Box
+        component="img"
+        src="/GWA_fundo_form.png"
+        alt="Catedral Illustration"
+        sx={{
+          width: '100%',
+          maxHeight: 400,
+          objectFit: 'fill',
+          marginTop: -2, // opcional para “grudar” no formulário
+          zIndex: 0,
+        }}
+      />
       <Footer />
     </>
   );
