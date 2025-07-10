@@ -1,41 +1,67 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { motion, useAnimationFrame } from 'framer-motion';
-import { useRef } from 'react';
+import { useAnimationFrame } from 'framer-motion';
+import React, { useRef } from 'react';
 
 interface CarroselInfinitoProps {
   imagePaths: string[];
   reverse?: boolean;
-  speed?: number; // px/segundo
+  speed?: number; // pixels por segundo
+  height?: number; // altura das imagens
+  gap?: number; // espaçamento entre imagens
+  background?: string;
 }
 
-export default function CarroselInfinito({ imagePaths, reverse = false, speed = 10 }: CarroselInfinitoProps) {
+export default function CarroselInfinito({
+  imagePaths,
+  reverse = false,
+  speed = 20,
+  height = 32,
+  gap = 32,
+  background = '#111',
+}: CarroselInfinitoProps) {
   const baseSpeed = reverse ? -speed : speed;
 
   const x = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const contentWidth = useRef(0);
 
-  useAnimationFrame((_, delta) => {
-    if (!containerRef.current || !contentRef.current) return;
+  const tripled = [...imagePaths, ...imagePaths, ...imagePaths];
 
-    const containerWidth = containerRef.current.offsetWidth;
-    const contentWidth = contentRef.current.scrollWidth / 2;
-
-    x.current -= (baseSpeed * delta) / 1000;
-
-    if (Math.abs(x.current) >= contentWidth) {
-      x.current = 0;
-    }
-
+   React.useEffect(() => {
     if (contentRef.current) {
+      contentWidth.current = contentRef.current.scrollWidth / 3;
+
+      // Começa no meio (segunda repetição)
+      x.current = -contentWidth.current;
       contentRef.current.style.transform = `translateX(${x.current}px)`;
     }
-  });
+  }, [tripled]);
 
-  const duplicated = [...imagePaths, ...imagePaths];
+  useAnimationFrame((_, delta) => {
+  if (!containerRef.current || !contentRef.current) return;
 
+
+  const contentWidth = contentRef.current.scrollWidth / 2;
+
+  x.current += (baseSpeed * delta) / 1000;
+
+  if (!reverse && x.current <= -contentWidth) {
+    x.current = 0;
+  }
+
+  if (reverse && x.current >= 0) {
+    x.current = -contentWidth;
+  }
+
+  if (contentRef.current) {
+    contentRef.current.style.transform = `translateX(${x.current}px)`;
+  }
+});
+
+const duplicated = [...imagePaths, ...imagePaths]; // duplicado só 2x é suficiente
   return (
     <Box
       ref={containerRef}
@@ -43,7 +69,7 @@ export default function CarroselInfinito({ imagePaths, reverse = false, speed = 
         overflow: 'hidden',
         width: '100%',
         py: 3,
-        backgroundColor: '#111',
+        backgroundColor: background,
       }}
     >
       <Box
@@ -52,6 +78,7 @@ export default function CarroselInfinito({ imagePaths, reverse = false, speed = 
           display: 'flex',
           width: 'fit-content',
           whiteSpace: 'nowrap',
+          transition: 'transform 0.1s linear',
         }}
       >
         {duplicated.map((src, idx) => (
@@ -61,9 +88,9 @@ export default function CarroselInfinito({ imagePaths, reverse = false, speed = 
             src={src}
             alt={`carousel-${idx}`}
             sx={{
-              height: 24,
+              height,
               width: 'auto',
-              mx: 8,
+              mx: `${gap / 2}px`,
               borderRadius: 2,
               flexShrink: 0,
             }}

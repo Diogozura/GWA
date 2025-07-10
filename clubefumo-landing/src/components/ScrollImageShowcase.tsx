@@ -7,6 +7,8 @@ import { useRef, useState, useEffect } from 'react';
 const MotionBox = motion(Box);
 
 interface Section {
+  iconSvg?: string;
+  icon?: string | React.ReactNode;
   title: string;
   description: string;
   image: string;
@@ -60,6 +62,15 @@ export default function CreativityScroll({ sections }: Props) {
                   <Typography
                     variant={i === currentIndex ? 'h3' : 'h5'}
                     gutterBottom
+                    textAlign={'start'}
+                    color="white"
+                  >
+                    {section.icon}
+                   <img src={section.iconSvg} width={24}/> 
+                  </Typography>
+                  <Typography
+                    variant={i === currentIndex ? 'h3' : 'h5'}
+                    gutterBottom
                     color="white"
                   >
                     {section.title}
@@ -79,6 +90,7 @@ export default function CreativityScroll({ sections }: Props) {
             sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <AnimatePresence mode="wait">
+
               <motion.img
                 key={sections[currentIndex].image}
                 src={sections[currentIndex].image}

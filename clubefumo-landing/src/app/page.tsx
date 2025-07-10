@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, } from 'framer-motion';
 import {
   Container,
   Typography,
@@ -15,14 +15,15 @@ import {
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FormContact from '@/components/FormContact';
-import CarroselInfinito from '@/components/CarroselInfinito';
+
 import EditIcon from '@mui/icons-material/Edit';
 import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-icons';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import CarroselInfinito2 from '@/components/CarroselInfinito2';
+import CarroselInfinito from '@/components/CarroselInfinito';
+
 
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
@@ -134,24 +135,29 @@ export default function Home() {
 
   const steps = [
     {
-      icon: <FontAwesomeIcon icon={faBong} size="2x" />,
+      iconSvg: '',
+      icon: <FontAwesomeIcon icon={faBong} />,
       title: 'Glass Gallery',
       description: 'Transform your media in real time with powerful image tools.',
+      image: '/hero/hero_2.png',
+
+    },
+    {
+      iconSvg: '/GWA_Puff_icon.svg',
+      icon: '',
+      title: 'PUFFCO',
+      description: 'Automate your workflow and handle thousands of requests per second.',
       image: '/hero/hero_1.png',
     },
     {
-      icon: <FontAwesomeIcon icon={faBagShopping} size="2x" />,
-      title: 'Apparel',
-      description: 'Automate your workflow and handle thousands of requests per second.',
-      image: '/hero/hero_2.png',
-    },
-    {
-      icon: <FontAwesomeIcon icon={faSeedling} />,
+      iconSvg: '',
+      icon: <FontAwesomeIcon icon={faBagShopping} />,
       title: 'Seeds',
       description: 'Deliver assets from any corner of the globe with low latency.',
       image: '/hero/hero_3.png',
     },
     {
+      iconSvg: '',
       icon: <FontAwesomeIcon icon={faSeedling} />,
       title: 'Seeds',
       description: 'Deliver assets from any corner of the globe with low latency.',
@@ -255,15 +261,14 @@ export default function Home() {
       </Container>
 
       {/* Brands Section */}
-      <Container maxWidth={"100%"} sx={{ backgroundColor: '#111' }}>
+      <Box sx={{ backgroundColor: '#111' }}>
         <Typography
-          variant="h4"
+          variant="h5"
           gutterBottom
           sx={{ textAlign: 'center', color: 'white', mb: 2 }}
         >
           {t.partners_title}
         </Typography>
-
         <CarroselInfinito
           imagePaths={[
             '/brands/cola.png',
@@ -275,10 +280,13 @@ export default function Home() {
             '/brands/riptips.png',
             '/brands/Snail.png',
           ]}
-          speed={15}
+          reverse={true}
+          speed={30}     // pixels/segundo
+          height={30}    // altura das imagens
+          gap={150}       // espaçamento horizontal entre as imagens
         />
 
-      </Container>
+      </Box>
 
 
 
@@ -294,7 +302,7 @@ export default function Home() {
       <Box height={'100vh'}>
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
-          <CarroselInfinito2
+          <CarroselInfinito
             imagePaths={[
               '/glass/glass_1.png',
               '/glass/glass_2.png',
@@ -302,23 +310,23 @@ export default function Home() {
               '/glass/glass_4.png',
               '/glass/glass_5.png',
             ]}
-            reverse={true}
+            reverse={false}
             speed={30}     // pixels/segundo
             height={300}    // altura das imagens
-            gap={40}       // espaçamento horizontal entre as imagens
+            gap={180}       // espaçamento horizontal entre as imagens
           />
         </Box>
 
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
-          <CarroselInfinito2
+          <CarroselInfinito
             imagePaths={[
               '/merch/merch_1.png',
               '/merch/merch_2.png',
               '/merch/merch_3.png',
               '/merch/merch_4.png',
             ]}
-            reverse={false}
+            reverse={true}
             speed={30}     // pixels/segundo
             height={300}    // altura das imagens
             gap={50}       // espaçamento horizontal entre as imagens
@@ -372,7 +380,7 @@ export default function Home() {
                   Complete the form below to request an invitation to GWA Social Club.
                 </Typography>
 
-                <FormContact t={t} lang={lang} />
+                <FormContact t={Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v ?? ""]))} lang={lang} />
               </Grid>
 
 
