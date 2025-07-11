@@ -18,9 +18,9 @@ import FormContact from '@/components/FormContact';
 import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import CarroselInfinito from '@/components/CarroselInfinito';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCannabis, faComment, faDoorOpen, faJoint, faMapLocationDot, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import InfiniteCarousel from '@/components/CarroselInfinito';
 
 
 export default function Home() {
@@ -130,71 +130,43 @@ export default function Home() {
   return (
     <>
       <Header open={false} lang={lang} setLang={setLang} />
-       
+
       {/* Hero Section */}
       <Container maxWidth="lg" sx={{ textAlign: 'center', py: 10 }}>
         <motion.div
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="start"
-
             sx={{
-              backgroundColor: '#111',
-              paddingTop: { xs: 10, md: 16 },
-              position: 'relative',
+              width: '100%',
+              maxWidth: 600,
+              height:{ xs: 300, md: 350 },
+              backgroundColor: '#ff3399',
+              borderRadius: 4,
               overflow: 'hidden',
+              boxShadow: '0 0 40px 10px #ff3399', // mais intenso e visível
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mx: 'auto',
             }}
           >
-            {/* Fundo branco centralizado */}
-            <Box
-              sx={{
-                position: 'relative',
-                width: { xs: '90%', md: '70%' },
-                maxWidth: 900,
-                minHeight: 400,
-                backgroundColor: '#fff',
-                borderRadius: '24px',
-                paddingTop: '140px',
-                paddingBottom: '40px',
-                px: { xs: 2, md: 4 },
-                zIndex: 1,
-              }}
-            >
-
-            </Box>
-
-
             <Box
               component="img"
-              src="/GWA_Logo1.png"
-              alt="GWA Logo"
+              src="/bg_main_logo.png"
+              alt="Glow Image"
               sx={{
-                position: 'absolute',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                top: {
-                  xs: '35px',   // até 600px
-                  sm: '30px',   // ≥ 600px
-                  md: '60px',   // ≥ 900px
-                  lg: '80px',   // ≥ 1200px
-                  xl: '100px',  // ≥ 1536px
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transition: 'transform 0.4s ease',
+                '&:hover': {
+                  transform: 'scale(1.05)',
                 },
-                width: {
-                  xs: '90%',
-                  sm: '60%',
-                  md: '35%',
-                  lg: '45%',
-                  xl: '30%',
-                },
-                zIndex: 2,
               }}
             />
-
           </Box>
         </motion.div>
 
@@ -229,25 +201,24 @@ export default function Home() {
           variant="h6"
           component={'h3'}
           gutterBottom
-          sx={{ textAlign: 'center', color: 'white', mb: 2 , textTransform: 'lowercase'}}
+          sx={{ textAlign: 'center', color: 'white', mb: 2, textTransform: 'lowercase' }}
         >
           {t.partners_title}
         </Typography>
-        <CarroselInfinito
-          imagePaths={[
-            '/brands/cola.png',
-            '/brands/fanta.png',
-            '/brands/raw.png',
-            '/brands/stoners.png',
-            '/brands/estathe.png',
-            '/brands/puffco.png',
-            '/brands/riptips.png',
-            '/brands/Snail.png',
-          ]}
-          reverse={false}
+
+        <InfiniteCarousel images={[
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
+        ]}
           speed={30}     // pixels/segundo
-          height={{ xs: 20, md: 20, }} // altura das imagens
-          gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens
+          imgHeight={{ xs: 20, md: 25, }} // altura das imagens
+          gap={{ xs: 3, md: 7 }}// espaçamento horizontal entre as imagens 
         />
 
       </Box>
@@ -266,34 +237,33 @@ export default function Home() {
       <Box height={{ xs: 'auto', md: '80vh' }}>
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
-          <CarroselInfinito
-            imagePaths={[
-              '/glass/glass_1.png',
-              '/glass/glass_2.png',
-              '/glass/glass_3.png',
-              '/glass/glass_4.png',
-              '/glass/glass_5.png',
-            ]}
-            reverse={false}
-            speed={30}     // pixels/segundo
-            height={{ xs: 150, md: 300, }}
-            gap={{ xs: 3, md: 5 }} // usa spacing do tema
+          <InfiniteCarousel images={[
+            '/glass/glass_1.png',
+            '/glass/glass_2.png',
+            '/glass/glass_3.png',
+            '/glass/glass_4.png',
+            '/glass/glass_5.png',
+          ]}
+            reverse={true}
+            speed={50}     // pixels/segundo
+            imgHeight={{ xs: 150, md: 300, }} // altura das imagens
+            gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens 
           />
         </Box>
 
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
-          <CarroselInfinito
-            imagePaths={[
-              '/merch/merch_1.png',
-              '/merch/merch_2.png',
-              '/merch/merch_3.png',
-              '/merch/merch_4.png',
-            ]}
-            reverse={true}
-            speed={30}     // pixels/segundo
-            height={{ xs: 150, md: 300, }} // altura das imagens
-            gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens
+
+          <InfiniteCarousel images={[
+            '/merch/merch_1.png',
+            '/merch/merch_2.png',
+            '/merch/merch_3.png',
+            '/merch/merch_4.png',
+          ]}
+            reverse={false}
+            speed={50}     // pixels/segundo
+            imgHeight={{ xs: 150, md: 300, }} // altura das imagens
+            gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens 
           />
         </Box>
 
@@ -342,7 +312,7 @@ export default function Home() {
 
               <Grid size={{ xs: 12 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Typography variant={theme.breakpoints.down('sm') ? 'h5' : 'h3'} fontWeight="bold" gutterBottom>
-                 <FontAwesomeIcon icon={faDoorOpen} /> {t.headline} 
+                  <FontAwesomeIcon icon={faDoorOpen} /> {t.headline}
                 </Typography>
                 <Typography variant="h5" fontWeight={300} gutterBottom>
                   {t.subheadline} <FontAwesomeIcon icon={faJoint} />

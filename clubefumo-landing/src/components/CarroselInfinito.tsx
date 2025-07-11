@@ -1,14 +1,11 @@
 'use client';
 
+import React, { useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
-import { useAnimationFrame } from 'framer-motion';
-import React, { useRef } from 'react';
 
-interface CarroselInfinitoProps {
-  imagePaths: string[];
-  reverse?: boolean;
-  speed?: number; // pixels por segundo
-  height?: {
+interface InfiniteCarouselProps {
+  images: string[];
+  imgHeight?: {
     xs?: number;
     sm?: number;
     md?: number;
@@ -23,92 +20,84 @@ interface CarroselInfinitoProps {
     xl?: number;
   };
   background?: string;
+  speed?: number; // em segundos
+  reverse?: boolean;
 }
 
-export default function CarroselInfinito({
-  imagePaths,
+export default function InfiniteCarousel({
+  images,
+  imgHeight = { xs: 30, md: 50 },
+  gap = { xs: 30, md: 50 },
+  // background = '#111',
+  speed = 30,
   reverse = false,
-  speed = 20,
-  height = { xs: 40, md: 300 }, // altura das imagens
-  gap = { xs: 1, md: 2 }, // espaçamento horizontal entre
-  background = '#111',
-}: CarroselInfinitoProps) {
-  const baseSpeed = reverse ? -speed : speed;
+}: InfiniteCarouselProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  const x = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const contentWidth = useRef(0);
-
-  const tripled = [...imagePaths, ...imagePaths, ...imagePaths];
-
-  React.useEffect(() => {
-    if (contentRef.current) {
-      contentWidth.current = contentRef.current.scrollWidth / 3;
-
-      // Começa no meio (segunda repetição)
-      x.current = -contentWidth.current;
-      contentRef.current.style.transform = `translateX(${x.current}px)`;
+  useEffect(() => {
+    const track = trackRef.current;
+    if (track) {
+      track.innerHTML += track.innerHTML; // duplicar para efeito infinito
     }
-  }, [tripled]);
+  }, []);
 
-  useAnimationFrame((_, delta) => {
-    if (!containerRef.current || !contentRef.current) return;
+    const animationName = reverse ? 'scroll-carousel-reverse' : 'scroll-carousel';
 
-
-    const contentWidth = contentRef.current.scrollWidth / 2;
-
-    x.current += (baseSpeed * delta) / 1000;
-
-    if (!reverse && x.current <= -contentWidth) {
-      x.current = 0;
-    }
-
-    if (reverse && x.current >= 0) {
-      x.current = -contentWidth;
-    }
-
-    if (contentRef.current) {
-      contentRef.current.style.transform = `translateX(${x.current}px)`;
-    }
-  });
-
-  const duplicated = [...imagePaths, ...imagePaths]; // duplicado só 2x é suficiente
   return (
     <Box
-      ref={containerRef}
       sx={{
         overflow: 'hidden',
         width: '100%',
-        py: 3,
-        backgroundColor: background,
+        py: 2,
+        // background,
       }}
     >
       <Box
-        ref={contentRef}
+        ref={trackRef}
         sx={{
           display: 'flex',
-          width: 'fit-content',
-          whiteSpace: 'nowrap',
-          transition: 'transform 0.1s linear',
+          width: 'max-content',
+          animation: `${animationName} ${speed}s linear infinite`,
+          gap,
         }}
+        className="carousel-track"
       >
-        {duplicated.map((src, idx) => (
+        {images.map((src, idx) => (
           <Box
             key={idx}
             component="img"
             src={src}
-            alt={`carousel-${idx}`}
+            alt={`Image ${idx + 1}`}
             sx={{
-              height: height,
-              mx: gap,
+              height: imgHeight,
+              gap: gap,
               width: 'auto',
-              borderRadius: 2,
+              objectFit: 'contain',
               flexShrink: 0,
             }}
           />
         ))}
       </Box>
+
+         <style jsx global>{`
+        @keyframes scroll-carousel {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scroll-carousel-reverse {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </Box>
   );
 }
