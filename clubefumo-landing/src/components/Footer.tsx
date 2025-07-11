@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Typography, Stack, IconButton } from '@mui/material';
+import { Box, Container, Typography, Stack, IconButton, Link } from '@mui/material';
 import { motion } from 'framer-motion';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
@@ -24,6 +24,26 @@ export default function Footer() {
                 <EmailIcon />
               </IconButton>
             </Stack>
+             <Typography
+                  variant="caption"
+                  display="block"
+                  textAlign="center"
+                  mt={2}
+                  color="gray"
+                >
+                  Puedes leer más en nuestra{' '}
+                  <Link href="/politica-privacidad" underline="hover" color="inherit">
+                    Política de Privacidad
+                  </Link>{' '}
+                  ·{' '}
+                  <Link href="/cookies" underline="hover" color="inherit">
+                    Política de Cookies
+                  </Link>{' '}
+                  ·{' '}
+                  <Link href="/terminos-condiciones" underline="hover" color="inherit">
+                    Términos y Condiciones
+                  </Link>
+                </Typography>
           </Stack>
         </Container>
       </Box>

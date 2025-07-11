@@ -1,22 +1,22 @@
 export default function Head() {
 
-    <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "SmokeClub",
-      "url": "https://gwasocialclub.es",
-      "logo": "https://gwasocialclub.es/logo.png",
-      "description": "Private club for smoke lovers and good vibes.",
-      "sameAs": ["https://instagram.com/smokeclub"]
-    })
-  }}
-></script>
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SmokeClub",
+        "url": "https://gwasocialclub.es",
+        "logo": "https://gwasocialclub.es/logo.png",
+        "description": "Private club for smoke lovers and good vibes.",
+        "sameAs": ["https://instagram.com/smokeclub"]
+      })
+    }}
+  ></script>
   return (
     <>
-      <title>SmokeClub – Exclusive Vibes Only</title>
+      <title>GWA Social Club</title>
       <meta name="description" content="A private club for good people, good vibes and good smoke. Apply now to join." />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charSet="utf-8" />
@@ -36,6 +36,8 @@ export default function Head() {
       <meta name="twitter:image" content="https://gwasocialclub.es/og-image.png" />
 
       <link rel="icon" href="/favicon/favicon.ico" />
+
+
     </>
   );
 }

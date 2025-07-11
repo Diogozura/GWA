@@ -17,6 +17,8 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
   const ref = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end end'],
@@ -29,12 +31,12 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
     {
       iconSvg: '',
       icon: <FontAwesomeIcon icon={faBong} />,
-      image: '/hero/hero_2.png',
+      image: '/hero/hero_1.png',
     },
     {
       iconSvg: '/GWA_Puff_icon.svg',
       icon: '',
-      image: '/hero/hero_1.png',
+      image: '/hero/hero_2.png',
     },
     {
       iconSvg: '',
@@ -110,7 +112,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
             </Typography>
 
             {/* Imagem */}
-            <Box sx={{ position: 'relative', height:300, width: '100%', mt: 4 }}>
+            <Box sx={{ position: 'relative', height: 300, width: '100%', mt: 4 }}>
               {steps.map((step, index) => (
                 <motion.img
                   key={index}
@@ -128,6 +130,72 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
                     left: 0,
                     right: 0,
                     bottom: 0,
+                    borderRadius: 10,
+                    margin: 'auto',
+                    maxWidth: '100%',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    pointerEvents: 'none',
+                  }}
+                />
+              ))}
+            </Box>
+          </Box>
+        ) : isTablet ? (
+          // TABLET
+          <Box
+            sx={{
+              minHeight: '100vh',
+              px: 6,
+              py: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+          >
+            {/* Ícone */}
+            {steps[currentIndex].icon && (
+              <Box sx={{ fontSize: 48, color: 'white', mb: 2 }}>
+                {steps[currentIndex].icon}
+              </Box>
+            )}
+            {steps[currentIndex].iconSvg && (
+              <Box
+                component="img"
+                src={steps[currentIndex].iconSvg}
+                alt="Icon"
+                sx={{ width: 40, height: 40, mb: 2 }}
+              />
+            )}
+
+            <Typography variant="h4" color="white" gutterBottom>
+              {steps[currentIndex].title}
+            </Typography>
+            <Typography variant="body1" color="gray" gutterBottom>
+              {steps[currentIndex].description}
+            </Typography>
+
+            <Box sx={{ position: 'relative', height: 400, width: '100%', mt: 4 , zIndex: 1 }}>
+              {steps.map((step, index) => (
+                <motion.img
+                  key={index}
+                  src={step.image}
+                  alt={step.title}
+                  initial={false}
+                  animate={{
+                    opacity: index === currentIndex ? 1 : 0,
+                    zIndex: index === currentIndex ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    borderRadius: 10,
                     margin: 'auto',
                     maxWidth: '100%',
                     height: 'auto',
@@ -205,6 +273,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
                     left: 0,
                     right: 0,
                     bottom: 0,
+                    borderRadius: 10,
                     margin: 'auto',
                     maxWidth: '80%',
                     height: 'auto',

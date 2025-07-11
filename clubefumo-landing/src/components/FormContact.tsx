@@ -137,6 +137,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     fullWidth
                                     margin="normal"
                                     variant="filled"
+                                    required
                                     onChange={handleChange}
                                     value={formData.email}
                                     InputProps={{
@@ -150,6 +151,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     fullWidth
                                     margin="normal"
                                     variant="filled"
+                                    required
                                     onChange={handleChange}
                                     value={formData.phone}
                                 />
@@ -158,11 +160,11 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     name="howFoundUs"
                                     fullWidth
                                     select
+                                    required
                                     margin="normal"
                                     variant="filled"
                                     value={formData.howFoundUs}
-                                    onChange={handleChange}
-                                    required                    >
+                                    onChange={handleChange}                   >
                                     <MenuItem value="social">Instagram / Social Media</MenuItem>
                                     <MenuItem value="web">Google / Website</MenuItem>
                                     <MenuItem value="friend">Referred by a Member</MenuItem>
@@ -190,6 +192,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     fullWidth
                                     margin="normal"
                                     variant="filled"
+                                    required
                                     onChange={handleChange}
                                     value={formData.why}
                                     InputProps={{ style: { backgroundColor: 'white' } }}

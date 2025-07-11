@@ -20,7 +20,7 @@ import CookieConsent from '@/components/CookieConsent';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CarroselInfinito from '@/components/CarroselInfinito';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCannabis, faComment, faMapLocationDot, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCannabis, faComment, faDoorOpen, faJoint, faMapLocationDot, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Home() {
@@ -117,12 +117,7 @@ export default function Home() {
           </motion.div>
         </Container>
         <CookieConsent
-          t={{
-            cookies_privacy: t.cookies_privacy ?? "",
-            cookies_consent: t.cookies_consent ?? "",
-            cookies_reject: t.cookies_reject ?? "",
-            cookies_accept: t.cookies_accept ?? "",
-          }}
+
         />
         <Footer />
       </>
@@ -135,6 +130,7 @@ export default function Home() {
   return (
     <>
       <Header open={false} lang={lang} setLang={setLang} />
+       
       {/* Hero Section */}
       <Container maxWidth="lg" sx={{ textAlign: 'center', py: 10 }}>
         <motion.div
@@ -230,9 +226,10 @@ export default function Home() {
       {/* Brands Section */}
       <Box sx={{ backgroundColor: '#111' }}>
         <Typography
-          variant="h5"
+          variant="h6"
+          component={'h3'}
           gutterBottom
-          sx={{ textAlign: 'center', color: 'white', mb: 2 }}
+          sx={{ textAlign: 'center', color: 'white', mb: 2 , textTransform: 'lowercase'}}
         >
           {t.partners_title}
         </Typography>
@@ -247,10 +244,10 @@ export default function Home() {
             '/brands/riptips.png',
             '/brands/Snail.png',
           ]}
-          reverse={true}
+          reverse={false}
           speed={30}     // pixels/segundo
-          height={{ xs: 20, md: 30, }} // altura das imagens
-          gap={{ xs: 3, md: 10 }}// espaçamento horizontal entre as imagens
+          height={{ xs: 20, md: 20, }} // altura das imagens
+          gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens
         />
 
       </Box>
@@ -266,7 +263,7 @@ export default function Home() {
 
 
 
-      <Box height={{ xs: 'auto', md: '100vh' }}>
+      <Box height={{ xs: 'auto', md: '80vh' }}>
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
           <CarroselInfinito
@@ -345,10 +342,10 @@ export default function Home() {
 
               <Grid size={{ xs: 12 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Typography variant={theme.breakpoints.down('sm') ? 'h5' : 'h3'} fontWeight="bold" gutterBottom>
-                  {t.headline}
+                 <FontAwesomeIcon icon={faDoorOpen} /> {t.headline} 
                 </Typography>
                 <Typography variant="h5" fontWeight={300} gutterBottom>
-                  {t.subheadline}
+                  {t.subheadline} <FontAwesomeIcon icon={faJoint} />
                 </Typography>
               </Grid>
               {/* Textos e Form */}
@@ -385,7 +382,7 @@ export default function Home() {
                       border: 0,
                       borderRadius: 2,
                       mb: 2,
-                      height: { xs: 300, md: 360 },
+                      height: { xs: 300, md: 345 },
                     }}
                     loading="lazy"
                     allowFullScreen
@@ -431,6 +428,7 @@ export default function Home() {
           <KeyboardArrowUpIcon />
         </Fab>
       ) : null}
+      <CookieConsent />
       <Footer />
     </>
   );
