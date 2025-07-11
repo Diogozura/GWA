@@ -25,7 +25,7 @@ export default function Head() {
       {/* Open Graph / Facebook */}
       <meta property="og:title" content="SmokeClub – Exclusive Vibes Only" />
       <meta property="og:description" content="A private club for good people, good vibes and good smoke. Apply now to join." />
-      <meta property="og:image" content="https://gwasocialclub.es/og-image.jpg" />
+      <meta property="og:image" content="https://gwasocialclub.es/og-image.png" />
       <meta property="og:url" content="https://gwasocialclub.es" />
       <meta property="og:type" content="website" />
 
@@ -33,7 +33,7 @@ export default function Head() {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="SmokeClub – Exclusive Vibes Only" />
       <meta name="twitter:description" content="A private club for good people, good vibes and good smoke. Apply now to join." />
-      <meta name="twitter:image" content="https://gwasocialclub.es/og-image.jpg" />
+      <meta name="twitter:image" content="https://gwasocialclub.es/og-image.png" />
 
       <link rel="icon" href="/favicon/favicon.ico" />
     </>
