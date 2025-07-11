@@ -6,7 +6,7 @@ export default function Head() {
       __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "SmokeClub",
+        "name": "GWA Social Club",
         "url": "https://gwasocialclub.es",
         "logo": "https://gwasocialclub.es/logo.png",
         "description": "Private club for smoke lovers and good vibes.",
@@ -23,7 +23,7 @@ export default function Head() {
       <meta name="robots" content="index, follow" />
 
       {/* Open Graph / Facebook */}
-      <meta property="og:title" content="SmokeClub – Exclusive Vibes Only" />
+      <meta property="og:title" content="GWA Social Club" />
       <meta property="og:description" content="A private club for good people, good vibes and good smoke. Apply now to join." />
       <meta property="og:image" content="https://gwasocialclub.es/og-image.png" />
       <meta property="og:url" content="https://gwasocialclub.es" />
@@ -31,7 +31,7 @@ export default function Head() {
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="SmokeClub – Exclusive Vibes Only" />
+      <meta name="twitter:title" content="GWA Social Club" />
       <meta name="twitter:description" content="A private club for good people, good vibes and good smoke. Apply now to join." />
       <meta name="twitter:image" content="https://gwasocialclub.es/og-image.png" />
 

@@ -142,6 +142,7 @@ export default function Home() {
             sx={{
               width: '100%',
               maxWidth: 600,
+              mb: 4,
               height:{ xs: 300, md: 350 },
               backgroundColor: '#ff3399',
               borderRadius: 4,

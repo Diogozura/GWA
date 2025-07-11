@@ -232,7 +232,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
                       gap={1}
                     >
                       {section.icon}
-                      {section.iconSvg && <Image src={section.iconSvg} width={24} alt="icon" />}
+                      {section.iconSvg && <Image src={section.iconSvg} width={24} height={24} alt="icon" />}
                       {section.title}
                     </Typography>
                     {i === currentIndex && (
