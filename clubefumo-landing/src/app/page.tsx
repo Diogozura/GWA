@@ -279,8 +279,8 @@ export default function Home() {
             ]}
             reverse={false}
             speed={30}     // pixels/segundo
-            height={{ xs: 150,md: 400, }}
-            gap={{ xs: 3, md: 10 }} // usa spacing do tema
+            height={{ xs: 150,md: 300, }}
+            gap={{ xs: 3, md: 5 }} // usa spacing do tema
           />
         </Box>
 
@@ -296,7 +296,7 @@ export default function Home() {
             reverse={true}
             speed={30}     // pixels/segundo
             height={{ xs: 150,md: 300, }} // altura das imagens
-            gap={{ xs: 3, md: 10 }}// espaçamento horizontal entre as imagens
+            gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens
           />
         </Box>
 

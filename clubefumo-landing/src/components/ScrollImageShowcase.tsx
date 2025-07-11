@@ -3,7 +3,7 @@
 import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Typography, Grid, useTheme, useMediaQuery } from '@mui/material';
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
 const MotionBox = motion(Box);
@@ -110,26 +110,39 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
             </Typography>
 
             {/* Imagem */}
-            <motion.img
-              key={steps[currentIndex].image}
-              src={steps[currentIndex].image}
-              alt={steps[currentIndex].title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5 }}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                marginTop: 16,
-              }}
-            />
+            <Box sx={{ position: 'relative', height:300, width: '100%', mt: 4 }}>
+              {steps.map((step, index) => (
+                <motion.img
+                  key={index}
+                  src={step.image}
+                  alt={step.title}
+                  initial={false}
+                  animate={{
+                    opacity: index === currentIndex ? 1 : 0,
+                    zIndex: index === currentIndex ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    margin: 'auto',
+                    maxWidth: '100%',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    pointerEvents: 'none',
+                  }}
+                />
+              ))}
+            </Box>
           </Box>
         ) : (
           // DESKTOP: lista lateral + imagem grande
           <Grid container alignItems="center" sx={{ height: '100%' }}>
             <Grid
-             size={{ xs: 12, md: 6 }}
+              size={{ xs: 12, md: 6 }}
               sx={{ px: { md: 8 }, display: 'flex', flexDirection: 'column', gap: 2 }}
             >
               {steps.map((section, i) => {
@@ -164,30 +177,42 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
             </Grid>
 
             <Grid
-             size={{ xs: 12, md: 6 }}
+              size={{ xs: 12, md: 6 }}
               sx={{
-                height: '100%',
+                height: 600,
+                position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                overflow: 'hidden',
               }}
             >
-              <AnimatePresence mode="wait">
+              {steps.map((step, index) => (
                 <motion.img
-                  key={steps[currentIndex].image}
-                  src={steps[currentIndex].image}
-                  alt={steps[currentIndex].title}
-                  initial={{ opacity: 1, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 1, scale: 0.95 }}
-                  transition={{ duration: 0.6 }}
+                  key={index}
+                  src={step.image}
+                  alt={step.title}
+                  initial={false}
+                  animate={{
+                    opacity: index === currentIndex ? 1 : 0,
+                    scale: index === currentIndex ? 1 : 1.02,
+                    zIndex: index === currentIndex ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.8, ease: 'easeInOut' }}
                   style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    margin: 'auto',
                     maxWidth: '80%',
                     height: 'auto',
                     objectFit: 'contain',
+                    pointerEvents: 'none',
                   }}
                 />
-              </AnimatePresence>
+              ))}
             </Grid>
           </Grid>
         )}
