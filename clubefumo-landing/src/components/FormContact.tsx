@@ -1,6 +1,8 @@
 import { Box, Button, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function FormContact({ t, lang }: { t: Record<string, string>, lang: string }) {
     const [formData, setFormData] = React.useState({
@@ -82,7 +84,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     {t.tkssubscribe}
                                 </Typography>
                                 <Typography variant="body1" color="white" mb={3}>
-                                     {t.subscribe}
+                                    {t.subscribe}
                                 </Typography>
                                 <Button
                                     variant="contained"
@@ -99,7 +101,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                         },
                                     }}
                                 >
-                                   {t.platform}
+                                    {t.platform}
                                 </Button>
                             </Box>
                         </Box>
@@ -128,7 +130,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                 />
 
                                 <TextField
-                                    placeholder="So we can slide into your DMs (with an invite, no SPAM ever!)"
+                                    placeholder={t.email_place}
                                     label={t.email}
                                     name="email"
                                     type="email"
@@ -137,10 +139,12 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     variant="filled"
                                     onChange={handleChange}
                                     value={formData.email}
-                                    InputProps={{ style: { backgroundColor: 'white' } }}
+                                    InputProps={{
+                                        style: { backgroundColor: 'white' }
+                                    }}
                                 />
                                 <TextField
-                                    placeholder="In case you forget your lighter... or something else"
+                                    placeholder={t.phone_place}
                                     label={t.phone}
                                     name="phone"
                                     fullWidth
@@ -178,7 +182,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     />
                                 )}
                                 <TextField
-                                    placeholder='Impress us. Or just say "I like nice people and good vibes" that works too.'
+                                    placeholder={t.why_join_place}
                                     label={t.why_join}
                                     name="why"
                                     multiline
@@ -196,6 +200,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                                     variant="contained"
                                     size="large"
                                     disabled={sending}
+                                    endIcon={<FontAwesomeIcon icon={faArrowUpFromBracket} />}
                                     type="submit"
                                     sx={{
                                         mt: 3,

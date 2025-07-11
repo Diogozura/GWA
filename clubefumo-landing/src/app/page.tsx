@@ -15,12 +15,12 @@ import {
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FormContact from '@/components/FormContact';
-
-import EditIcon from '@mui/icons-material/Edit';
 import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CarroselInfinito from '@/components/CarroselInfinito';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCannabis, faComment, faMapLocationDot, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Home() {
@@ -207,7 +207,7 @@ export default function Home() {
           component="a"
           href="#formcontact"
           variant="contained"
-          endIcon={<EditIcon />}
+          endIcon={<FontAwesomeIcon icon={faPenToSquare} />}
           sx={{
             background: 'linear-gradient(90deg, #8f00ff, #a300d6)',
             color: '#FFA500', // ou '#FFB300' para mais amarelo
@@ -249,7 +249,7 @@ export default function Home() {
           ]}
           reverse={true}
           speed={30}     // pixels/segundo
-          height={{ xs: 20,md: 30, }} // altura das imagens
+          height={{ xs: 20, md: 30, }} // altura das imagens
           gap={{ xs: 3, md: 10 }}// espaçamento horizontal entre as imagens
         />
 
@@ -279,7 +279,7 @@ export default function Home() {
             ]}
             reverse={false}
             speed={30}     // pixels/segundo
-            height={{ xs: 150,md: 300, }}
+            height={{ xs: 150, md: 300, }}
             gap={{ xs: 3, md: 5 }} // usa spacing do tema
           />
         </Box>
@@ -295,7 +295,7 @@ export default function Home() {
             ]}
             reverse={true}
             speed={30}     // pixels/segundo
-            height={{ xs: 150,md: 300, }} // altura das imagens
+            height={{ xs: 150, md: 300, }} // altura das imagens
             gap={{ xs: 3, md: 5 }}// espaçamento horizontal entre as imagens
           />
         </Box>
@@ -366,14 +366,14 @@ export default function Home() {
               <Grid size={{ xs: 12, md: 6 }}>
                 <Box>
                   <Typography variant="h6" fontWeight="bold" mb={1}>
-                    GWA Social Club
+                    GWA Social Club <FontAwesomeIcon icon={faCannabis} />
                   </Typography>
                   <Typography variant="body2" color="rgba(255,255,255,0.8)" mb={1}>
-                    Carrer de Sant Antoni Maria Claret, 25<br />
+                    <FontAwesomeIcon icon={faMapLocationDot} />  Carrer de Sant Antoni Maria Claret, 25<br />
                     Gràcia, 08037 - Barcelona
                   </Typography>
                   <Typography variant="body2" color="rgba(255,255,255,0.8)" mb={2}>
-                    info@gwasocialclub.es
+                    <FontAwesomeIcon icon={faComment} /> info@gwasocialclub.es
                   </Typography>
 
                   <Box
@@ -397,6 +397,7 @@ export default function Home() {
                     href="https://maps.app.goo.gl/hH2L3ZyPNVACKfdb6"
                     target="_blank"
                     fullWidth
+                    startIcon={<FontAwesomeIcon icon={faMapLocationDot} />}
                     sx={{
                       mt: 1,
                       background: '#ffa500',
