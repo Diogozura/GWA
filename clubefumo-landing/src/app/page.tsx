@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, } from 'framer-motion';
 import {
   Container,
@@ -19,8 +19,6 @@ import FormContact from '@/components/FormContact';
 import EditIcon from '@mui/icons-material/Edit';
 import ScrollImageShowcase from '@/components/ScrollImageShowcase';
 import CookieConsent from '@/components/CookieConsent';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-icons';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CarroselInfinito from '@/components/CarroselInfinito';
 
@@ -78,7 +76,6 @@ export default function Home() {
     setHydrated(true);
   }, []);
 
-  const ref = useRef(null);
 
   if (!hydrated) return null;
 
@@ -93,7 +90,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Typography variant="h3" gutterBottom>{t.age_title}</Typography>
+            <Typography variant={theme.breakpoints.down('sm') ? 'h5' : 'h3'} gutterBottom>{t.age_title}</Typography>
             <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
               <Button variant="contained" color="primary" onClick={() => setAgeVerified(true)}>{t.yes}</Button>
               <Button variant="outlined" color="secondary" onClick={() => alert("Access denied")}>{t.no}</Button>
@@ -133,37 +130,7 @@ export default function Home() {
     );
   }
 
-  const steps = [
-    {
-      iconSvg: '',
-      icon: <FontAwesomeIcon icon={faBong} />,
-      title: 'Glass Gallery',
-      description: 'Transform your media in real time with powerful image tools.',
-      image: '/hero/hero_2.png',
 
-    },
-    {
-      iconSvg: '/GWA_Puff_icon.svg',
-      icon: '',
-      title: 'PUFFCO',
-      description: 'Automate your workflow and handle thousands of requests per second.',
-      image: '/hero/hero_1.png',
-    },
-    {
-      iconSvg: '',
-      icon: <FontAwesomeIcon icon={faBagShopping} />,
-      title: 'Seeds',
-      description: 'Deliver assets from any corner of the globe with low latency.',
-      image: '/hero/hero_3.png',
-    },
-    {
-      iconSvg: '',
-      icon: <FontAwesomeIcon icon={faSeedling} />,
-      title: 'Seeds',
-      description: 'Deliver assets from any corner of the globe with low latency.',
-      image: '/hero/hero_4.png',
-    },
-  ];
 
   return (
     <>
@@ -282,8 +249,8 @@ export default function Home() {
           ]}
           reverse={true}
           speed={30}     // pixels/segundo
-          height={30}    // altura das imagens
-          gap={150}       // espaçamento horizontal entre as imagens
+          height={{ xs: 20,md: 30, }} // altura das imagens
+          gap={{ xs: 3, md: 10 }}// espaçamento horizontal entre as imagens
         />
 
       </Box>
@@ -294,12 +261,12 @@ export default function Home() {
       {/* Showcase Section */}
       <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
 
-        <ScrollImageShowcase sections={steps} />
+        <ScrollImageShowcase t={Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v ?? ""]))} />
       </Container>
 
 
 
-      <Box height={'100vh'}>
+      <Box height={{ xs: 'auto', md: '100vh' }}>
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
           <CarroselInfinito
@@ -312,8 +279,8 @@ export default function Home() {
             ]}
             reverse={false}
             speed={30}     // pixels/segundo
-            height={300}    // altura das imagens
-            gap={180}       // espaçamento horizontal entre as imagens
+            height={{ xs: 150,md: 400, }}
+            gap={{ xs: 3, md: 10 }} // usa spacing do tema
           />
         </Box>
 
@@ -328,26 +295,38 @@ export default function Home() {
             ]}
             reverse={true}
             speed={30}     // pixels/segundo
-            height={300}    // altura das imagens
-            gap={50}       // espaçamento horizontal entre as imagens
+            height={{ xs: 150,md: 300, }} // altura das imagens
+            gap={{ xs: 3, md: 10 }}// espaçamento horizontal entre as imagens
           />
         </Box>
 
       </Box>
 
-      <Box ref={ref} sx={{ position: 'relative', height: '200vh', bgcolor: '#111' }}>
-
-        <motion.img
+      <Box
+        sx={{
+          position: 'relative',
+          height: { xs: 'auto', md: '100vh' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}
+        id="formcontact"
+      >
+        {/* Imagem de fundo coberta pela section */}
+        <Box
+          component="img"
           src="/GWA_fundo_form.png"
-          alt="Parallax Temple"
-          style={{
-            position: 'sticky',
-            top: 0,
+          alt="Fundo GWA"
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
             width: '100%',
-            height: '100vh',
+            height: '100%',
             objectFit: 'cover',
-            zIndex: 1,
-            // y: imgY as any,
+            zIndex: 0,
+            pointerEvents: 'none',
           }}
         />
 
@@ -365,7 +344,7 @@ export default function Home() {
             <Grid container spacing={4}>
 
               <Grid size={{ xs: 12 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <Typography variant="h3" fontWeight="bold" gutterBottom>
+                <Typography variant={theme.breakpoints.down('sm') ? 'h5' : 'h3'} fontWeight="bold" gutterBottom>
                   {t.headline}
                 </Typography>
                 <Typography variant="h5" fontWeight={300} gutterBottom>

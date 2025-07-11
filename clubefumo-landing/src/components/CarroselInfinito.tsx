@@ -8,8 +8,20 @@ interface CarroselInfinitoProps {
   imagePaths: string[];
   reverse?: boolean;
   speed?: number; // pixels por segundo
-  height?: number; // altura das imagens
-  gap?: number; // espaçamento entre imagens
+  height?: {
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+  };
+  gap?: {
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+  };
   background?: string;
 }
 
@@ -17,8 +29,8 @@ export default function CarroselInfinito({
   imagePaths,
   reverse = false,
   speed = 20,
-  height = 32,
-  gap = 32,
+  height = { xs: 40, md: 300 }, // altura das imagens
+  gap = { xs: 1, md: 2 }, // espaçamento horizontal entre
   background = '#111',
 }: CarroselInfinitoProps) {
   const baseSpeed = reverse ? -speed : speed;
@@ -30,7 +42,7 @@ export default function CarroselInfinito({
 
   const tripled = [...imagePaths, ...imagePaths, ...imagePaths];
 
-   React.useEffect(() => {
+  React.useEffect(() => {
     if (contentRef.current) {
       contentWidth.current = contentRef.current.scrollWidth / 3;
 
@@ -41,27 +53,27 @@ export default function CarroselInfinito({
   }, [tripled]);
 
   useAnimationFrame((_, delta) => {
-  if (!containerRef.current || !contentRef.current) return;
+    if (!containerRef.current || !contentRef.current) return;
 
 
-  const contentWidth = contentRef.current.scrollWidth / 2;
+    const contentWidth = contentRef.current.scrollWidth / 2;
 
-  x.current += (baseSpeed * delta) / 1000;
+    x.current += (baseSpeed * delta) / 1000;
 
-  if (!reverse && x.current <= -contentWidth) {
-    x.current = 0;
-  }
+    if (!reverse && x.current <= -contentWidth) {
+      x.current = 0;
+    }
 
-  if (reverse && x.current >= 0) {
-    x.current = -contentWidth;
-  }
+    if (reverse && x.current >= 0) {
+      x.current = -contentWidth;
+    }
 
-  if (contentRef.current) {
-    contentRef.current.style.transform = `translateX(${x.current}px)`;
-  }
-});
+    if (contentRef.current) {
+      contentRef.current.style.transform = `translateX(${x.current}px)`;
+    }
+  });
 
-const duplicated = [...imagePaths, ...imagePaths]; // duplicado só 2x é suficiente
+  const duplicated = [...imagePaths, ...imagePaths]; // duplicado só 2x é suficiente
   return (
     <Box
       ref={containerRef}
@@ -88,9 +100,9 @@ const duplicated = [...imagePaths, ...imagePaths]; // duplicado só 2x é sufici
             src={src}
             alt={`carousel-${idx}`}
             sx={{
-              height,
+              height: height,
+              mx: gap,
               width: 'auto',
-              mx: `${gap / 2}px`,
               borderRadius: 2,
               flexShrink: 0,
             }}
