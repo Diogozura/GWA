@@ -4,6 +4,7 @@ import { faBagShopping, faBong, faSeedling } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Typography, Grid, useTheme, useMediaQuery } from '@mui/material';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 
 const MotionBox = motion(Box);
@@ -67,7 +68,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
   // Pré-carrega as imagens quando `steps` mudar
   useEffect(() => {
     steps.forEach(section => {
-      const img = new Image();
+      const img = new window.Image(); // ✅ sem erro
       img.src = section.image;
     });
   }, [steps]);
@@ -177,7 +178,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
               {steps[currentIndex].description}
             </Typography>
 
-            <Box sx={{ position: 'relative', height: 600, width: '100%', mt: 4 , zIndex: 1 }}>
+            <Box sx={{ position: 'relative', height: 600, width: '100%', mt: 4, zIndex: 1 }}>
               {steps.map((step, index) => (
                 <motion.img
                   key={index}
@@ -231,7 +232,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
                       gap={1}
                     >
                       {section.icon}
-                      {section.iconSvg && <img src={section.iconSvg} width={24} alt="icon" />}
+                      {section.iconSvg && <Image src={section.iconSvg} width={24} alt="icon" />}
                       {section.title}
                     </Typography>
                     {i === currentIndex && (

@@ -3,6 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 export default function FormContact({ t, lang }: { t: Record<string, string>, lang: string }) {
     const [formData, setFormData] = React.useState({
@@ -70,7 +71,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                         transition={{ duration: 0.6 }}
                     >
                         <Box textAlign="center" mt={6}>
-                            <img
+                            <Image
                                 src="/codeQR.png" // substitua por uma imagem que tenha ou coloque no /public
                                 alt="Success"
                                 style={{
