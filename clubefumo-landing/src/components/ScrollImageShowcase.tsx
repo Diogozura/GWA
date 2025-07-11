@@ -16,7 +16,7 @@ interface CreativityScrollProps {
 export default function CreativityScroll({ t }: CreativityScrollProps) {
   const ref = useRef(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
   const { scrollYProgress } = useScroll({
@@ -177,7 +177,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
               {steps[currentIndex].description}
             </Typography>
 
-            <Box sx={{ position: 'relative', height: 400, width: '100%', mt: 4 , zIndex: 1 }}>
+            <Box sx={{ position: 'relative', height: 600, width: '100%', mt: 4 , zIndex: 1 }}>
               {steps.map((step, index) => (
                 <motion.img
                   key={index}

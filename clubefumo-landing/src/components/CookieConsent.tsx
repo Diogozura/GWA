@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Typography, Stack, useMediaQuery, Container, Link } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCookieBite } from '@fortawesome/free-solid-svg-icons';
-import { initGA } from './gtag';
+import { initGA } from '../types/gtag';
 
 
 export default function CookieConsent() {

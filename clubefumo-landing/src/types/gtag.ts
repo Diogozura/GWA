@@ -1,4 +1,12 @@
 // utils/gtag.ts
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
 export const GA_TRACKING_ID = 'G-94GXV85YLR';
 
 export const initGA = () => {
