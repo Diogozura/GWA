@@ -73,7 +73,9 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                         <Box textAlign="center" mt={6}>
                             <Image
                                 src="/codeQR.png" // substitua por uma imagem que tenha ou coloque no /public
-                                alt="Success"
+                                alt="qrCode"
+                                width={180}
+                                height={180}
                                 style={{
                                     maxWidth: 180,
                                     margin: '0 auto',

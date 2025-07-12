@@ -136,40 +136,74 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.8 }}
         >
           <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="start"
+            mb={4}
             sx={{
-              width: '100%',
-              maxWidth: 600,
-              mb: 4,
-              height:{ xs: 300, md: 350 },
-              backgroundColor: '#ff3399',
-              borderRadius: 4,
-              overflow: 'hidden',
-              boxShadow: '0 0 40px 10px #ff3399', // mais intenso e visível
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mx: 'auto',
+              backgroundColor: '#111',
+              paddingTop: { xs: 10, md: 16 },
+              position: 'relative',
+              
             }}
           >
+            {/* Fundo branco com background image e glow */}
+            <Box
+              sx={{
+                position: 'relative',
+                width: { xs: '90%', md: '70%' },
+                maxWidth: 900,
+                minHeight: 400,
+                backgroundColor: '#fff',
+                borderRadius: '24px',
+                paddingTop: '140px',
+                paddingBottom: '40px',
+                px: { xs: 2, md: 4 },
+                zIndex: 1,
+
+                // Adicionado:
+                backgroundImage: 'url(/bg_main_logo.png)',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                boxShadow: '0 0 25px 4px #ff3399',
+              }}
+            >
+              {/* conteúdo interno opcional */}
+            </Box>
+
+            {/* Logo principal por cima */}
             <Box
               component="img"
-              src="/bg_main_logo.png"
-              alt="Glow Image"
+              src="/GWA_Logo1.png"
+              alt="GWA Logo"
               sx={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                transition: 'transform 0.4s ease',
-                '&:hover': {
-                  transform: 'scale(1.05)',
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                top: {
+                  xs: '35px',
+                  sm: '30px',
+                  md: '60px',
+                  lg: '80px',
+                  xl: '100px',
                 },
+                width: {
+                  xs: '90%',
+                  sm: '60%',
+                  md: '35%',
+                  lg: '45%',
+                  xl: '30%',
+                },
+                zIndex: 2,
               }}
             />
           </Box>
         </motion.div>
+
 
         <Typography variant="h6" color="text.secondary">{t.description}</Typography>
         <Button
@@ -228,7 +262,7 @@ export default function Home() {
 
 
       {/* Showcase Section */}
-      <Container maxWidth="lg" sx={{ py: 4, textAlign: 'center' }}>
+      <Container maxWidth="lg" sx={{ py: 2, textAlign: 'center' }}>
 
         <ScrollImageShowcase t={Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v ?? ""]))} />
       </Container>
@@ -346,7 +380,7 @@ export default function Home() {
 
                   <Box
                     component="iframe"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.610671155578!2d2.1648533!3d41.4042607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3e2c57cd0bd%3A0x3fe09c75bd92c2c7!2sGWA%20Social%20Club!5e0!3m2!1spt-BR!2sbr!4v1752144497798!5m2!1spt-BR!2sbr"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.610671155578!2d2.1648533!3d41.4042607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3e2c57cd0bd%3A0x3fe09c75bd92c2c7!2sGWA%20Social%20Club!5e0!3m2!1ses!2ses!4v1752144497798!5m2!1ses!2ses"
                     width="100%"
                     height="400"
                     sx={{

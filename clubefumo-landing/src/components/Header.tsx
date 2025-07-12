@@ -26,7 +26,7 @@ export default function Header({ open, lang, setLang }: Props) {
         top: 0,
         width: '100%',
         zIndex: 999,
-        background: 'rgba(17, 17, 17, 0.95)',
+        background: 'rgba(17, 17, 17, 0)',
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
       }}

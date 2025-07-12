@@ -73,8 +73,8 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
     });
   }, [steps]);
   return (
-    <Box ref={ref} sx={{ position: 'relative', height: `${steps.length * 100}vh` }}>
-      <Box sx={{ position: 'sticky', top: 0, height: { xs: 'auto', md: '100vh' }, bgcolor: '#111' }}>
+    <Box ref={ref} sx={{ position: 'relative', height: `${steps.length * 85}vh` }}>
+      <Box sx={{ position: 'sticky', top: 0, height: { xs: 'auto', }, bgcolor: '#111' }}>
         {isMobile ? (
           // MOBILE: apenas o item atual centralizado
           <Box
@@ -209,10 +209,12 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
           </Box>
         ) : (
           // DESKTOP: lista lateral + imagem grande
-          <Grid container alignItems="center" sx={{ height: '100%' }}>
+          <Grid container alignItems="center" sx={{
+            minHeight: '80vh', // ← menor que 100vh
+          }}>
             <Grid
               size={{ xs: 12, md: 6 }}
-              sx={{ px: { md: 8 }, display: 'flex', flexDirection: 'column', gap: 2 }}
+              sx={{ px: { md: 4 }, display: 'flex', flexDirection: 'column', gap: 2 }}
             >
               {steps.map((section, i) => {
                 const opacity = i === currentIndex ? 1 : 0.4;
@@ -248,7 +250,7 @@ export default function CreativityScroll({ t }: CreativityScrollProps) {
             <Grid
               size={{ xs: 12, md: 6 }}
               sx={{
-                height: 600,
+                height: 500,
                 position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
