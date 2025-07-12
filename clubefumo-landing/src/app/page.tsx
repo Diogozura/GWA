@@ -250,6 +250,22 @@ export default function Home() {
           '/brands/puffco.png',
           '/brands/riptips.png',
           '/brands/Snail.png',
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
+          '/brands/cola.png',
+          '/brands/fanta.png',
+          '/brands/raw.png',
+          '/brands/stoners.png',
+          '/brands/estathe.png',
+          '/brands/puffco.png',
+          '/brands/riptips.png',
+          '/brands/Snail.png',
         ]}
           speed={30}     // pixels/segundo
           imgHeight={{ xs: 20, md: 25, }} // altura das imagens
