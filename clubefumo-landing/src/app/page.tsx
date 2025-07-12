@@ -25,7 +25,7 @@ import InfiniteCarousel from '@/components/CarroselInfinito';
 
 export default function Home() {
   const [ageVerified, setAgeVerified] = useState(false);
-  const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('en');
+  const [lang, setLang] = useState<'en' | 'es' | 'ca' | 'it'>('es');
   interface Translations {
     age_title?: string;
     yes?: string;
@@ -267,7 +267,7 @@ export default function Home() {
           '/brands/riptips.png',
           '/brands/Snail.png',
         ]}
-          speed={30}     // pixels/segundo
+          speed={100}     // pixels/segundo
           imgHeight={{ xs: 20, md: 25, }} // altura das imagens
           gap={{ xs: 3, md: 7 }}// espaçamento horizontal entre as imagens 
         />

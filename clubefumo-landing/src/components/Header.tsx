@@ -1,6 +1,6 @@
 'use client';
 
-import { AppBar, Toolbar, Box, Select, MenuItem, useMediaQuery } from '@mui/material';
+import { AppBar, Toolbar, Box, Select, MenuItem } from '@mui/material';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 import React from 'react';
 
@@ -11,7 +11,6 @@ type Props = {
 };
 
 export default function Header({ open, lang, setLang }: Props) {
-  const isMobile = useMediaQuery('(max-width:600px)');
   const { scrollYProgress } = useScroll();
 
   // Transição: imagem aparece com o scroll
@@ -56,7 +55,7 @@ export default function Header({ open, lang, setLang }: Props) {
             />
           </Box>
 
-          {!isMobile && (
+        
             <Box sx={{ position: 'absolute', right: 16 }}>
               <Select
                 value={lang}
@@ -75,13 +74,13 @@ export default function Header({ open, lang, setLang }: Props) {
                   minWidth: 100,
                 }}
               >
-                <MenuItem value="en">🇬🇧 English</MenuItem>
                 <MenuItem value="es">🇪🇸 Español</MenuItem>
+                <MenuItem value="en">🇬🇧 English</MenuItem>
                 <MenuItem value="ca">🇨🇦 Català</MenuItem>
                 <MenuItem value="it">🇮🇹 Italiano</MenuItem>
               </Select>
             </Box>
-          )}
+       
         </Toolbar>
       </AppBar>
     </motion.div>
