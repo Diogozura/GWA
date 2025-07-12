@@ -10,7 +10,7 @@ export default function Head() {
         "url": "https://gwasocialclub.es",
         "logo": "https://gwasocialclub.es/logo.png",
         "description": "Private club for smoke lovers and good vibes.",
-        "sameAs": ["https://instagram.com/smokeclub"]
+        "sameAs": ["https://instagram.com/gwasocialclub"]
       })
     }}
   ></script>

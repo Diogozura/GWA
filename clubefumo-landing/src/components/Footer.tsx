@@ -15,12 +15,12 @@ export default function Footer() {
       <Box sx={{ py: 1, backgroundColor: '#111', color: '#fff' }}>
         <Container maxWidth="md">
           <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-            <Typography variant="body2">© {new Date().getFullYear()} SmokeClub. All rights reserved.</Typography>
+            <Typography variant="body2">© {new Date().getFullYear()} GWA Social Club. All rights reserved.</Typography>
             <Stack direction="row" spacing={1}>
               <IconButton href="https://instagram.com" target="_blank" color="inherit">
                 <InstagramIcon />
               </IconButton>
-              <IconButton href="mailto:contact@smokeclub.com" color="inherit">
+              <IconButton href="mailto:contact@gwasocialclub.com" color="inherit">
                 <EmailIcon />
               </IconButton>
             </Stack>
