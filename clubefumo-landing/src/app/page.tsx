@@ -214,7 +214,7 @@ export default function Home() {
         </motion.div>
 
 
-        <Typography variant="h6" color="text.secondary">{t.description}</Typography>
+        <Typography variant="h6" color="text.secondary" mb={2}>{t.description}</Typography>
         <Button
           onClick={() => {
             const target = document.getElementById('formcontact');
