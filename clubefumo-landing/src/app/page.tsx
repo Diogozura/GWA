@@ -147,7 +147,7 @@ export default function Home() {
               backgroundColor: '#111',
               paddingTop: { xs: 10, md: 16 },
               position: 'relative',
-              
+
             }}
           >
             {/* Fundo branco com background image e glow */}
@@ -186,19 +186,28 @@ export default function Home() {
                 transform: 'translateX(-50%)',
                 top: {
                   xs: '35px',
-                  sm: '30px',
+                  sm: '10px',
                   md: '60px',
                   lg: '80px',
                   xl: '100px',
                 },
                 width: {
-                  xs: '90%',
-                  sm: '60%',
+                  xs: '95%',
+                  sm: '50%',
                   md: '35%',
-                  lg: '45%',
+                  lg: '35%',
                   xl: '30%',
                 },
                 zIndex: 2,
+                '@media (min-width:450px) and (max-width:599px)': {
+                  top: '40px',
+                  width: '70%',
+                },
+                '@media (min-width:900px) and (max-width:915px)': {
+                  top: '60px',
+                  width: '45%',
+                },
+
               }}
             />
           </Box>
@@ -207,8 +216,12 @@ export default function Home() {
 
         <Typography variant="h6" color="text.secondary">{t.description}</Typography>
         <Button
-          component="a"
-          href="#formcontact"
+          onClick={() => {
+            const target = document.getElementById('formcontact');
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
           variant="contained"
           endIcon={<FontAwesomeIcon icon={faPenToSquare} />}
           sx={{
@@ -285,7 +298,12 @@ export default function Home() {
 
 
 
-      <Box height={{ xs: 'auto', md: '80vh' }}>
+      <Box height={{ xs: 'auto', sm: '30vh', md: '80vh', lg: '100vh', xl: 'auto' }} sx={{
+        '@media (min-width:900px) and (max-width:915px)': {
+          height: '50vh'
+        },
+
+      }}>
         {/* Brands 2 Section */}
         <Box sx={{ backgroundColor: '#111' }}>
           <InfiniteCarousel images={[
@@ -324,7 +342,7 @@ export default function Home() {
         sx={{
           position: 'relative',
           height: 'auto',
-          padding:'1rem',
+          padding: '1rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -350,7 +368,7 @@ export default function Home() {
         />
 
 
-        <Container maxWidth="lg"  sx={{ position: 'relative', zIndex: 2, pt: 12 }}>
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, pt: 12 }}>
           <Box
             sx={{
               background: 'linear-gradient(to right, #ff5e00, #ffc800)',
