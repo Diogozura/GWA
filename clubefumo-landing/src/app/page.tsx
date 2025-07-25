@@ -323,7 +323,8 @@ export default function Home() {
       <Box
         sx={{
           position: 'relative',
-          height: { xs: 'auto', md: '100vh' },
+          height: 'auto',
+          padding:'1rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -349,7 +350,7 @@ export default function Home() {
         />
 
 
-        <Container maxWidth="lg" id="formcontact" sx={{ position: 'relative', zIndex: 2, pt: 12 }}>
+        <Container maxWidth="lg"  sx={{ position: 'relative', zIndex: 2, pt: 12 }}>
           <Box
             sx={{
               background: 'linear-gradient(to right, #ff5e00, #ffc800)',
@@ -381,7 +382,7 @@ export default function Home() {
               </Grid>
 
 
-              <Grid size={{ xs: 12, md: 6 }}>
+              <Grid size={{ xs: 12, md: 6 }} >
                 <Box>
                   <Typography variant="h6" fontWeight="bold" mb={1}>
                     GWA Social Club <FontAwesomeIcon icon={faCannabis} />

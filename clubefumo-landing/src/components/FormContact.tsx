@@ -117,7 +117,7 @@ export default function FormContact({ t, lang }: { t: Record<string, string>, la
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <Box component="form" onSubmit={handleSubmit}>
+                        <Box component="form" onSubmit={handleSubmit} id="formcontact">
                             <Stack spacing={3}>
                                 <TextField
                                     placeholder={t.name_place}
